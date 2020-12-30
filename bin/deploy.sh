@@ -2,29 +2,27 @@
 
 set -ex
 
-# "https://${GH_TOKEN}@github.com/fsquillace/junest-repo.git"
-REPO_URL="https://github.com/fsquillace/junest-repo.git"
+REPO_URL="https://${GH_TOKEN}@github.com/fsquillace/junest-repo.git"
 REPO_DIR="$(mktemp -d -t ci-XXXXXXXXXX)/repo"
 
 git clone ${REPO_URL} ${REPO_DIR}
 
-cp ./junest.db.tar.gz ${REPO_DIR}/x86_64/junest.db
-cp ./junest.files.tar.gz ${REPO_DIR}/x86_64/junest.files
+cp ./junest.db.tar.gz ${REPO_DIR}/any/junest.db
+cp ./junest.files.tar.gz ${REPO_DIR}/any/junest.files
 
 # TODO A smarter approach is to push only if files have changed
-rm -f ${REPO_DIR}/x86_64/*.pkg.tar.zst
-cp ./pkgs/*/*.pkg.tar.zst ${REPO_DIR}/x86_64/
+rm -f ${REPO_DIR}/any/*.pkg.tar.zst
+cp ./pkgs/*/*.pkg.tar.zst ${REPO_DIR}/any/
 
 cd ${REPO_DIR}
-ls -l ${REPO_DIR}/x86_64/*
+ls -l ${REPO_DIR}/any/*
 
-#git add ./pearl-config/repo.conf
-#git add ${REPO_DIR}/x86_64/junest.db
-#git add ${REPO_DIR}/x86_64/junest.files
-#git add ${REPO_DIR}/x86_64/*.pkg.tar.zst
-#git remote
-#git config user.email ${EMAIL}
-#git config user.name "${USERNAME}"
-#git commit -m "Update repo from junest-aur-repo: ${TRAVIS_COMMIT}"
-#git push "${REPO_URL}" main
+git add ${REPO_DIR}/any/junest.db
+git add ${REPO_DIR}/any/junest.files
+git add ${REPO_DIR}/any/*.pkg.tar.zst
+git remote
+git config user.email ${EMAIL}
+git config user.name "${USERNAME}"
+git commit -m "Update repo from junest-aur-repo: ${TRAVIS_COMMIT}"
+git push "${REPO_URL}" main
 
