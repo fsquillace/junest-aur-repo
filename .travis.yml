@@ -21,6 +21,7 @@ archlinux:
   packages:
   # Pacman packages
   - ccache
+  - git
 
   before_install:
   # 1.Override `package-cleanup.hook` to preserve cache for travis.
@@ -37,11 +38,7 @@ archlinux:
      sudo sed -i '$a CXXFLAGS="$CXXFLAGS -w"' /etc/makepkg.conf
   script:
   - ./bin/build_packages.sh
-  - repo-add junest.db.tar.gz pkgs/*/*.pkg.tar.zst
-
-before_install:
-  - sudo apt-get update
-  - sudo apt-get -y install awscli
+  - ./bin/update_db.sh
 
 script:
   - "curl -s https://raw.githubusercontent.com/bartoszek/arch-travis/master/arch-travis.sh | bash"
