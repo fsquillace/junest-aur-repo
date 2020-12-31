@@ -5,7 +5,7 @@
 # https://wiki.archlinux.org/index.php/Arch_User_Repository#Submitting_packages
 
 pkgname=sudo-fake
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=1
 pkgdesc="Simple script that bypasses sudo and execute the actual command. Useful for fakeroot environments."
 arch=('any')
@@ -23,6 +23,8 @@ source=()
 md5sums=()
 noextract=()
 
+# Use FAKEROOTDONTTRYCHOWN to avoid problems when setting
+# uid/gid to files: https://github.com/vn971/rua/issues/89
 package() {
     install -d -m 755 "${pkgdir}/usr/bin/"
     cat <<EOF > "${pkgdir}/usr/bin/sudo"
@@ -36,6 +38,7 @@ do
     esac
 done
 
+export FAKEROOTDONTTRYCHOWN=true
 [[ -z "\${@}" ]] || fakechroot fakeroot "\${@}"
 EOF
 
