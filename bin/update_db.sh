@@ -14,6 +14,9 @@ then
     echo "junest.db already exists. Using it..."
     cp ${REPO_DIR}/any/junest.db $BASE_DIR/junest.db.tar.gz
     cp ${REPO_DIR}/any/junest.files $BASE_DIR/junest.files.tar.gz
+else
+    # This gives a signal that a new deploy has to occur
+    touch $BASE_DIR/.different_files
 fi
 
 for pkgfile in $BASE_DIR/pkgs/*/*.pkg.tar.zst
