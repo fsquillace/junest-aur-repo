@@ -1,0 +1,74 @@
+# Maintainer: Filippo Squillace <feel dot sqoox at gmail dot com>
+# More details on how to change this file:
+# https://wiki.archlinux.org/index.php/PKGBUILD
+# https://wiki.archlinux.org/index.php/Creating_packages
+# https://wiki.archlinux.org/index.php/Arch_User_Repository#Submitting_packages
+
+
+# This PKGBUILD is based on https://aur.archlinux.org/packages/qemu-user-static-bin/
+_pkgname=qemu-user-static
+pkgdesc="Statically linked QEMU user binaries compiled with a different architecture. Useful for containers/chroot environments with binfmt."
+pkgver=5.2
+pkgrel=1
+
+pkgname=$_pkgname-bin-alt
+arch=('x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
+url="http://wiki.qemu.org"
+license=('GPL2' 'LGPL2.1')
+depends=()
+makedepends=()
+provides=()
+conflicts=()
+
+if [ "$CARCH" = 'x86_64' ]; then
+  _current_canonical_arch='x86_64'
+  _current_arch=amd64
+  _alt_canonical_arch=arm
+  _alt_arch=arm64
+else
+  _current_canonical_arch=arm
+  _current_arch=arm64
+  _alt_canonical_arch=x86_64
+  _alt_arch=amd64
+fi
+
+_debsrc="${_pkgname}_${pkgver}+dfsg-3"
+source=(
+  "https://deb.debian.org/debian/pool/main/q/qemu/${_debsrc}_arm64.deb"
+  "https://deb.debian.org/debian/pool/main/q/qemu/${_debsrc}_amd64.deb"
+)
+noextract=("${_debsrc}_arm64.deb" "${_debsrc}_amd64.deb")
+sha256sums=("SKIP" "SKIP")
+
+prepare() {
+  rm -Rf arm64_build
+  mkdir arm64_build
+  cd arm64_build
+  bsdtar -x -f ../${_debsrc}_arm64.deb
+  cd ..
+
+  rm -Rf amd64_build
+  mkdir amd64_build
+  cd amd64_build
+  bsdtar -x -f ../${_debsrc}_amd64.deb
+  cd ..
+}
+
+build() {
+  cd arm64_build
+  tar -xJf data.tar.xz -C .
+  cd ..
+
+  cd amd64_build
+  tar -xJf data.tar.xz -C .
+  cd ..
+}
+
+package() {
+  echo "Installing qemu static binaries"
+  install -d -m 755 "${pkgdir}/usr/bin"
+  install -m 755 ${_alt_arch}_build/usr/bin/qemu-${_current_canonical_arch}-static "$pkgdir"/usr/bin/qemu-${_current_canonical_arch}-static-${_alt_canonical_arch}
+  install -m 755 ${_current_arch}_build/usr/bin/qemu-${_current_canonical_arch}-static "$pkgdir"/usr/bin/qemu-${_current_canonical_arch}-static-${_current_canonical_arch}
+}
+
+# vim:set ts=2 sw=2 et:
