@@ -9,7 +9,7 @@
 _pkgname=qemu-user-static
 pkgdesc="Statically linked QEMU user binaries compiled with a different architecture. Useful for containers/chroot environments with binfmt."
 pkgver=5.2
-pkgrel=3
+pkgrel=4
 
 pkgname=$_pkgname-bin-alt
 arch=('x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
@@ -32,7 +32,7 @@ else
   _alt_arch=amd64
 fi
 
-_debsrc="${_pkgname}_${pkgver}+dfsg-9"
+_debsrc="${_pkgname}_${pkgver}+dfsg-10"
 source=(
   "https://deb.debian.org/debian/pool/main/q/qemu/${_debsrc}_arm64.deb"
   "https://deb.debian.org/debian/pool/main/q/qemu/${_debsrc}_amd64.deb"
