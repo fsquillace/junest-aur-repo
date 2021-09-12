@@ -38,14 +38,11 @@ archlinux:
      sudo sed -i '$a CXXFLAGS="$CXXFLAGS -w"' /etc/makepkg.conf
   script:
   - ./bin/build_packages.sh
-  - ./bin/update_db.sh
+  - ./bin/update_db_and_deploy.sh
 
 script:
   - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
   - "curl -s https://raw.githubusercontent.com/fsquillace/arch-travis/master/arch-travis.sh | bash"
   - "echo pacman pkg cache size: $(du -h ~/.pkg-cache|cut -f1) in $(ls ~/.pkg-cache|wc -l) files"
   - ls -l pkgs/*/*.pkg.tar.zst
-
-after_success:
-  - ./bin/deploy.sh
 
