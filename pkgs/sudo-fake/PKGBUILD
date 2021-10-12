@@ -60,7 +60,6 @@ then
 
   \$fakechrootcmd \$fakerootcmd "\${@}"
 fi
-exit 0
 EOF
 
     chmod 755 "${pkgdir}/usr/bin/sudo"
