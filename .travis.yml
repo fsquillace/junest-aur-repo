@@ -9,11 +9,6 @@ cache:
 services:
 - docker
 
-env:
-  global:
-    # GH_TOKEN
-    - secure: "c1GqlOiglEeOBXAApC/u+wFYL6V1Da/oDU/RlxvLFpdA9PFPTTqBcuBiBCL5fVJEsl/u4yGlmjjHNqfxodqWhcbt6LP+jPhvARjb60MRiItEVn9jCINq3YaG0KD4/6+4ZSKY85KxW8b0+r41xfUQ5Y6+8EY3WxesXhlT9fZ7SSMEuZd9UJBWdjxkeD7fzs2BHpnDKoiL3mvCzT5cDvyjrFFJMofZkrTkx4iDeiOQYajU6D+caFlZH3pQOM/kPtpnxgiS7xXWdoD44eKnDEYC0Mmw+yZWtz4cd7VrTGrCuAlRNtmEPnNt+3LvY3tE5klorwU9STBhl1smRwxYElj4Oyq4TOq5m8E/m197H3C20y+ZYtvEJSgl2atz054/QfXMQF6OS2DQ0fmmVnA0KT30kyczsYI7g00pymJXpDZ2snn0wHELEAaKmHbHrEnFlkRqlS+WIDWlqv3x+KMih+Th2hx2jfCQcalh5qG+5QOxaBr6WzhFy2trSw/b5Q083rCOuIdFCI+e99TQ1nk66rkj9kLyOa0PHbr5i7mTFmhtlh9drfJE3HxsbJXILfmUZaOhGW7emHCwz79L3p6IEzksqX40T9QF9/vThybIobT6EH9dSgakKIb6T/Lbrkus4jgeQdtwN5ggP+eFE4si/5xPTzrYSUEg1NuhgHzd5jH+7EI="
-
 archlinux:
   mount:
   - ~/.ccache:~/.ccache

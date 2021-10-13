@@ -7,7 +7,7 @@ set -ex
 
 BASE_DIR="$(readlink -f $(dirname $(readlink -f "$0"))/..)"
 
-REPO_URL="https://github.com/fsquillace/junest-repo.git"
+REPO_URL="https://${GH_TOKEN}@github.com/fsquillace/junest-repo.git"
 REPO_DIR="$(mktemp -d -t ci-XXXXXXXXXX)/repo"
 
 git clone ${REPO_URL} ${REPO_DIR}
@@ -61,4 +61,5 @@ git config user.email "${EMAIL}"
 git config user.name "${USERNAME}"
 git commit -m "Update repo from junest-aur-repo: ${TRAVIS_COMMIT}"
 git push "${REPO_URL}" main
+
 
