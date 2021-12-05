@@ -31,6 +31,11 @@ archlinux:
      sudo sed -i '/^COMPRESSXZ/s/\xz/xz -T 2/' /etc/makepkg.conf
      sudo sed -i '$a   CFLAGS="$CFLAGS -w"'   /etc/makepkg.conf
      sudo sed -i '$a CXXFLAGS="$CXXFLAGS -w"' /etc/makepkg.conf
+     # This ensures to have the most up to date keys before installing any
+     # other packages
+     sudo pacman --noconfirm -Sy archlinux-keyring
+     sudo pacman-key --init
+     sudo pacman-key --populate archlinux
   script:
   - ./bin/build_packages.sh
   - ./bin/update_db_and_deploy.sh
