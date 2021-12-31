@@ -24,7 +24,7 @@ source=()
 md5sums=()
 noextract=()
 
-MAIN_REPO=https://s3-eu-west-1.amazonaws.com/junest-repo
+MAIN_REPO=https://dwa8bhj1f036z.cloudfront.net
 PROOT_LINK=${MAIN_REPO}/proot
 
 source=("proot-x86_64"::"$PROOT_LINK/proot-v5.2.0-x86_64-static" "proot-arm"::"$PROOT_LINK/proot-arm")
