@@ -32,7 +32,7 @@ else
   _alt_arch=amd64
 fi
 
-_debsrc="${_pkgname}_${pkgver}+dfsg-11"
+_debsrc="${_pkgname}_${pkgver}+dfsg-11+deb11u1"
 source=(
   "https://deb.debian.org/debian/pool/main/q/qemu/${_debsrc}_arm64.deb"
   "https://deb.debian.org/debian/pool/main/q/qemu/${_debsrc}_amd64.deb"
