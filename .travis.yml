@@ -1,5 +1,7 @@
 sudo: required
 os: linux
+arch: arm64-graviton2
+virt: vm
 
 cache:
   directories:
@@ -15,7 +17,10 @@ before_install:
 
 script:
   - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
-  - docker run --rm -v "$(pwd):/build" -v ~/.ccache:/home/travis/.ccache -v ~/.pkg-cache:/var/cache/pacman/pkg -e USERNAME="$USERNAME" -e EMAIL="$EMAIL" -e GH_TOKEN="$GH_TOKEN" --privileged archlinux:latest bash /build/ci/build_and_push_packages.sh
+  #- docker run --rm -v "$(pwd):/build" -v ~/.ccache:/home/travis/.ccache -v ~/.pkg-cache:/var/cache/pacman/pkg -e USERNAME="$USERNAME" -e EMAIL="$EMAIL" -e GH_TOKEN="$GH_TOKEN" --privileged archlinux:latest bash /build/ci/build_and_push_packages.sh
+  - docker run --rm --privileged multiarch/qemu-user-static:register --reset
+  - docker run --platform arm64v8 --rm -t arm64v8/ubuntu uname -m
+  - docker run --platform arm64 --rm -v "$(pwd):/build" -v ~/.ccache:/home/travis/.ccache -v ~/.pkg-cache:/var/cache/pacman/pkg -e USERNAME="$USERNAME" -e EMAIL="$EMAIL" -e GH_TOKEN="$GH_TOKEN" --privileged menci/archlinuxarm:latest bash /build/ci/build_and_push_packages.sh
 
   - "echo pacman pkg cache size: $(du -h ~/.pkg-cache|cut -f1) in $(ls ~/.pkg-cache|wc -l) files"
   - ls -l pkgs/*/*.pkg.tar.zst
