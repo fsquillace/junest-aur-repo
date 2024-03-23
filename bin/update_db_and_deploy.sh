@@ -60,6 +60,7 @@ git remote
 git config user.email "${EMAIL}"
 git config user.name "${USERNAME}"
 git commit -m "Update repo from junest-aur-repo: ${TRAVIS_COMMIT}"
-git push "${REPO_URL}" main
+git remote set-url origin "${REPO_URL}"
+git push origin main
 
 
